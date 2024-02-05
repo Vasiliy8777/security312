@@ -14,7 +14,7 @@
 <p th:text="'Login:'+' '+${user.getLogin()}">value</p>
 <br>
 <br>
-<a th:href="@{/admin/edit(id=${user.getId()})}">Edit</a>
+<a th:href="@{/admin/update(id=${user.getId()})}">Edit</a>
 <br>
 <br>
 <form th:method="POST" th:action="@{/admin/delete(id=${user.getId()})}">

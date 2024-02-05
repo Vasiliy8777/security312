@@ -61,7 +61,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/edit")
+    @GetMapping("/update")
     public String editUserById(@RequestParam(value = "id", required = false) Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("roles", roleService.getListOfRoles());
@@ -72,6 +72,8 @@ public class AdminController {
     public String saveUser(@Valid User user,
                            BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("user", user);
+            model.addAttribute("roles", roleService.getListOfRoles());
             return "edit";
         } else {
             userService.updateUser(user);
@@ -79,7 +81,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping(value = "/delete")
+    @PostMapping(value = "/delete")
     public String deleteUser(@RequestParam(value = "id", required = false) Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";

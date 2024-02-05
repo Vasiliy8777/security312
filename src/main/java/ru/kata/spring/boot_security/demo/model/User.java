@@ -45,8 +45,7 @@ public class User implements UserDetails {
     @NotNull(message = "Please enter your password")
     @Column(name = "password")
     private String password;
-    @ManyToMany //(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    //@LazyCollection(LazyCollectionOption.EXTRA)
+    @ManyToMany
     @JoinTable(
             name = "users_role",
             joinColumns = @JoinColumn(name = "user_id"),
