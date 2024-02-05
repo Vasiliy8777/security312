@@ -37,6 +37,7 @@ public class UserService implements UserServ, UserDetailsService {
     public User getUserById(Long id) {
         return userDao.getUserById(id);
     }
+
     @Override
     //@Transactional(readOnly = true)
     public User findUserByLogin(String login) {

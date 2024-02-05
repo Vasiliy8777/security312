@@ -11,6 +11,8 @@ import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -18,6 +20,7 @@ public class AdminController {
     private final UserService userService;
     private final RoleServiceImpl roleService;
     private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public AdminController(UserService userService, RoleServiceImpl roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
@@ -25,26 +28,27 @@ public class AdminController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public String allUsersPage(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
-        return "users";
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "index";
     }
 
-    @GetMapping("/admin/show")
-    public String userById(@RequestParam("id") Long id, Model model) {
+    @GetMapping("/id")
+    public String userById(@RequestParam(value = "id", required = false) Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
-        return "user";
+        return "show";
     }
 
-    @GetMapping("/admin/new")
+    @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.getListOfRoles());
         return "new";
     }
 
-    @PostMapping("/admin/addUser")
+    @PostMapping("/create")
     public String addUser(@ModelAttribute("user") @Valid User user,
                           BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -57,27 +61,26 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/edit")
-    public String editUserById(@RequestParam(value = "id") Long id, Model model) {
+    @GetMapping("/edit")
+    public String editUserById(@RequestParam(value = "id", required = false) Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("roles", roleService.getListOfRoles());
         return "edit";
     }
 
-    @PostMapping("/admin/save")
-    public String saveUser(@ModelAttribute("user") @Valid User user,
+    @PostMapping("/save")
+    public String saveUser(@Valid User user,
                            BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("user", user);
-            model.addAttribute("roles", roleService.getListOfRoles());
             return "edit";
+        } else {
+            userService.updateUser(user);
+            return "redirect:/admin";
         }
-        userService.updateUser(user);
-        return "redirect:/admin";
     }
 
-    @GetMapping(value = "/admin/delete")
-    public String deleteUser(@RequestParam("id") Long id) {
+    @GetMapping(value = "/delete")
+    public String deleteUser(@RequestParam(value = "id", required = false) Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }

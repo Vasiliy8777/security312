@@ -5,33 +5,44 @@
     <title>Add a new user</title>
 </head>
 <body>
-<!--/*@thymesVar id="user" type="java"*/-->
-<form th:method="POST" th:action="@{/admin/addUser}" th:object="${user}">
-    <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name"/>
-    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
+<form th:method="POST" th:action="@{/admin/create}" th:object="${user}">
+    <label>Enter name</label>
+    <input type="text" name="name" placeholder="Enter name"/>
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
     <br>
-    <label for="lastName">Lastname</label>
-    <input type="text" th:field="*{surname}" id="lastName"/>
-    <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{surname}">Error</div>
     <br>
-    <label for="yearOfBirth">Year of birth</label>
-    <input type="number" th:field="*{age}" id="yearOfBirth"/>
-    <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Error</div>
+    <label>Enter surname</label>
+    <input type="text" name="surname" placeholder="Enter surname"/>
+    <div style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
     <br>
-    <label for="login">Login</label>
-    <input type="text" th:field="*{login}" id="login"/>
-    <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Error</div>
     <br>
-    <label for="password">Password</label>
-    <input type="text" th:field="*{password}" id="password"/>
-    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</div>
+    <label>Enter age</label>
+    <input type="text" name="age" value=0/>
+    <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</div>
+    <br>
+    <br>
+    <label>Enter email</label>
+    <input type="text" name="email" placeholder="Enter email"/>
+    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
+    <br>
+    <br>
+    <label>Enter Login</label>
+    <input type="text" name="login" value=0/>
+    <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login error</div>
+    <br>
+    <br>
+    <label>Enter Password</label>
+    <input type="text" name="password"/>
+    <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
+    <br>
     <br>
     <select th:name="roles" th:value="*{roles}">
         <option th:each="role:${roles}" th:value="${role.id}" th:text="${role.role}" selected/>
     </select>
-    <input type="submit" value="Add user"/>
-    </form>
+    <br>
+    <br>
+    <input type="submit" value="Create!"/>
+</form>
 <br>
 <a href="/admin">Back to the list</a>
 <br>
