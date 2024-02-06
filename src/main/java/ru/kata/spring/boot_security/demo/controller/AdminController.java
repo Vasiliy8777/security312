@@ -69,7 +69,7 @@ public class AdminController {
     }
 
     @PostMapping("/save")
-    public String saveUser(@Valid User user,
+    public String saveUser(@ModelAttribute("user") @Valid User user,
                            BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("user", user);
