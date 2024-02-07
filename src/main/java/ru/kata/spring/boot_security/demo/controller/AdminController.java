@@ -42,23 +42,24 @@ public class AdminController {
     }
 
     @GetMapping("/new")
-    public String newUser(Model model) {
-        model.addAttribute("user", new User());
+    public String newUser(User user, Model model) {
+        model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getListOfRoles());
         return "new";
     }
 
     @PostMapping("/create")
-    public String addUser(@ModelAttribute("user") @Valid User user,
+    public String addUser(@Valid User user,
                           BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            return "new";
+        } else {
             model.addAttribute("user", user);
             model.addAttribute("roles", roleService.getListOfRoles());
-            return "new";
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userService.addUser(user);
+            return "redirect:/admin";
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.addUser(user);
-        return "redirect:/admin";
     }
 
     @GetMapping("/update")
@@ -76,6 +77,7 @@ public class AdminController {
             model.addAttribute("roles", roleService.getListOfRoles());
             return "edit";
         } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.updateUser(user);
             return "redirect:/admin";
         }

@@ -30,7 +30,7 @@
                th:text="${user.getName()} + ' ' + ${user.getSurname()}">user</a>
         </td>
         <td th:width="70" th:align="center">
-            <a th:each="role:${user.roles}" th:text="${role.role}">user</a>
+            <a th:each="role:${user.roles}" th:text="${role.role.contains('ADMIN')?'ADMIN':'USER'}">user</a>
         </td>
         <td th:width="100" th:align="center">
 

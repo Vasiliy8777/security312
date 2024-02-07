@@ -41,25 +41,6 @@ public class UserDao implements Dao {
         userRepository.save(updatedUser);
     }
 
-//    @Override
-//    public void updateUser(Long id, User updatedUser) {
-//        User existingUser = userRepository.findById(id).orElse(null);
-//        if (existingUser != null) {
-//            existingUser.setName(updatedUser.getName());
-//            existingUser.setSurname(updatedUser.getSurname());
-//            existingUser.setAge(updatedUser.getAge());
-//            existingUser.setEmail(updatedUser.getEmail());
-//            existingUser.setLogin(updatedUser.getLogin());
-//            existingUser.setRoles(updatedUser.getRoles());
-//            if (!existingUser.getPassword().equals(updatedUser.getPassword())) {
-//                existingUser.setPassword(
-//                        bCryptPasswordEncoder.encode(updatedUser.getPassword()));
-//            }
-//        } else {
-//            throw new UsernameNotFoundException(
-//                    String.format("User with id: %s not found", id));
-//        }
-//    }
 
     @Override
     public User getUserById(Long id) {
