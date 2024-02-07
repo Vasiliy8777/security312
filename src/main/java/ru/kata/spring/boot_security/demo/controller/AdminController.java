@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
@@ -13,6 +14,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -49,9 +51,11 @@ public class AdminController {
     }
 
     @PostMapping("/create")
-    public String addUser(@Valid User user,
+    public String addUser(@Valid @ModelAttribute("user") User user,
                           BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("user", user);
+            model.addAttribute("roles", roleService.getListOfRoles());
             return "new";
         } else {
             model.addAttribute("user", user);
@@ -70,7 +74,7 @@ public class AdminController {
     }
 
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute("user") @Valid User user,
+    public String saveUser(@Valid @ModelAttribute("user") User user,
                            BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("user", user);

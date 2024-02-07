@@ -29,6 +29,8 @@ public class User implements UserDetails {
     @Size(min = 2, message = "Surname is too short")
     private String surname;
     @Column
+    @Positive
+    @NotNull
     @Min(value = 0, message = "Age should be greater than 0")
     private int age;
     @Column

@@ -16,7 +16,6 @@ public class UserDao implements Dao {
     private final UserRepository userRepository;
 
 
-
     public UserDao(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
