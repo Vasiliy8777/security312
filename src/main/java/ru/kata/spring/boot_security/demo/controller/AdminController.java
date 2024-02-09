@@ -24,7 +24,6 @@ public class AdminController {
     public AdminController(UserService userService, RoleServiceImpl roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
-        //this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("")
@@ -57,7 +56,6 @@ public class AdminController {
         } else {
             model.addAttribute("user", user);
             model.addAttribute("roles", roleService.getListOfRoles());
-            //user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.addUser(user);
             return "redirect:/admin";
         }
@@ -78,7 +76,6 @@ public class AdminController {
             model.addAttribute("roles", roleService.getListOfRoles());
             return "edit";
         } else {
-          // user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.updateUser(user);
             return "redirect:/admin";
         }
