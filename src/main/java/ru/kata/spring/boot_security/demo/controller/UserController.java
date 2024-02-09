@@ -27,4 +27,8 @@ public class UserController {
         model.addAttribute("user", userService.findUserByLogin(principal.getName()));
         return "show";
     }
+    @GetMapping("/index")
+    public String showBootStrap() {
+        return "indexBootStrap";
+    }
 }
