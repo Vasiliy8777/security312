@@ -21,7 +21,7 @@ public class AdminController {
     private final RoleServiceImpl roleService;
 
     @Autowired
-    public AdminController(UserService userService, RoleServiceImpl roleService, PasswordEncoder passwordEncoder) {
+    public AdminController(UserService userService, RoleServiceImpl roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
@@ -30,7 +30,7 @@ public class AdminController {
     public String allUsersPage(Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
-        return "index";
+        return "indexBootStrap";
     }
 
     @GetMapping("/id")
